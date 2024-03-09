@@ -188,7 +188,7 @@ case "$log" in
         setOutput "new_tag" "$tag"
         setOutput "tag" "$tag"
         setOutput "part" "$default_semvar_bump"
-        exit 0;;
+        exit 0
     * )
         if [ "$default_semvar_bump" == "none" ]
         then
