@@ -145,7 +145,6 @@ jobs:
 
           UPDATE_OUTPUT_TAG=${{ steps.test_update.outputs.old_tag }}
           UPDATE_OUTPUT_NEWTAG=${{ steps.test_update.outputs.new_tag }}
-          UPDATE_OUTPUT_PART=${{ steps.test_update.outputs.part }}
 
           echo -e "> Update tests with_v:\n" >> $GITHUB_STEP_SUMMARY
 
