@@ -179,9 +179,10 @@ case "$log" in
         new=$version
         part="update"
         echo "Updating the "$version" tag to point to the latest commit"
-        setOutput "new_tag" "$tag"
-        setOutput "tag" "$tag"
-        exit 0
+        setOutput "new_tag" "$version"
+        setOutput "tag" "$version"
+        exit 0;;
+
     *$none_string_token* )
         echo "Default bump was set to none. Skipping..."
         setOutput "old_tag" "$tag"
