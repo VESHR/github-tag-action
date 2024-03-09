@@ -20,6 +20,7 @@ major_string_token=${MAJOR_STRING_TOKEN:-#major}
 minor_string_token=${MINOR_STRING_TOKEN:-#minor}
 patch_string_token=${PATCH_STRING_TOKEN:-#patch}
 none_string_token=${NONE_STRING_TOKEN:-#none}
+update_string_token=${UPDATE_STRING_TOKEN:-#update}
 branch_history=${BRANCH_HISTORY:-compare}
 # since https://github.blog/2022-04-12-git-security-vulnerability-announced/ runner uses?
 git config --global --add safe.directory /github/workspace
@@ -44,6 +45,7 @@ echo -e "\tMAJOR_STRING_TOKEN: ${major_string_token}"
 echo -e "\tMINOR_STRING_TOKEN: ${minor_string_token}"
 echo -e "\tPATCH_STRING_TOKEN: ${patch_string_token}"
 echo -e "\tNONE_STRING_TOKEN: ${none_string_token}"
+echo -e "\UPDATE_STRING_TOKEN: ${update_string_token}"
 echo -e "\tBRANCH_HISTORY: ${branch_history}"
 
 # verbose, show everything
@@ -159,6 +161,27 @@ case "$log" in
     *$major_string_token* ) new=$(semver -i major "$tag"); part="major";;
     *$minor_string_token* ) new=$(semver -i minor "$tag"); part="minor";;
     *$patch_string_token* ) new=$(semver -i patch "$tag"); part="patch";;
+    # check if the update string token is present
+    *$update_string_token* )
+        # Extract the version number from the update string token
+        version=${update_string_token#v} # remove 'v' prefix if it exists
+
+        # Check if a tag with this version number exists
+        if git rev-parse "$version" >/dev/null 2>&1
+        then
+            # If it does, delete the tag
+            git tag -d "$version"
+        fi
+
+        # Create a new tag with the same version number, pointing to the latest commit
+        git tag "$version"
+
+        new=$version
+        part="update"
+        echo "Updating the "$version" tag to point to the latest commit"
+        setOutput "new_tag" "$tag"
+        setOutput "tag" "$tag"
+        exit 0;;
     *$none_string_token* )
         echo "Default bump was set to none. Skipping..."
         setOutput "old_tag" "$tag"
