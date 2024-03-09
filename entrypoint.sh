@@ -181,14 +181,14 @@ case "$log" in
         echo "Updating the "$version" tag to point to the latest commit"
         setOutput "new_tag" "$tag"
         setOutput "tag" "$tag"
-        exit 0;;
+        exit 0
     *$none_string_token* )
         echo "Default bump was set to none. Skipping..."
         setOutput "old_tag" "$tag"
         setOutput "new_tag" "$tag"
         setOutput "tag" "$tag"
         setOutput "part" "$default_semvar_bump"
-        exit 0
+        exit 0;;
     * )
         if [ "$default_semvar_bump" == "none" ]
         then
