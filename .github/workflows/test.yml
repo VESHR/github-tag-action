@@ -75,6 +75,17 @@ jobs:
           VERBOSE: true
           DEFAULT_BUMP: patch
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      # USe action to test the update tag
+      - name: Test action update (with_v true)
+        id: test_update
+        uses: ./
+        env:
+          DRY_RUN: true
+          WITH_V: true
+          VERBOSE: true
+          DEFAULT_BUMP: update v1.0.0
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # Use the action to generate a tag for itself
       - name: Test action pre1-release (with_v true)
@@ -131,6 +142,16 @@ jobs:
           MAIN5_OUTPUT_TAG=${{ steps.test_main5.outputs.old_tag }}
           MAIN5_OUTPUT_NEWTAG=${{ steps.test_main5.outputs.new_tag }}
           MAIN5_OUTPUT_PART=${{ steps.test_main5.outputs.part }}
+
+          UPDATE_OUTPUT_TAG=${{ steps.test_update.outputs.old_tag }}
+          UPDATE_OUTPUT_NEWTAG=${{ steps.test_update.outputs.new_tag }}
+
+          echo -e "> Update tests with_v:\n" >> $GITHUB_STEP_SUMMARY
+
+          echo "UPDATE with_v Tag: $UPDATE_OUTPUT_TAG" >> $GITHUB_STEP_SUMMARY
+          echo "UPDATE with_v New tag: $UPDATE_OUTPUT_NEWTAG" >> $GITHUB_STEP_SUMMARY
+          echo "UPDATE with_v Part: $UPDATE_OUTPUT_PART" >> $GITHUB_STEP_SUMMARY
+
 
           echo -e "> MAIN tests with_v, default bump:\n" >> $GITHUB_STEP_SUMMARY
 

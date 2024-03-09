@@ -100,6 +100,7 @@ _NOTE: set the fetch-depth for `actions/checkout@v2` or newer to be sure you ret
 - **MINOR_STRING_TOKEN** _(optional)_ - Change the default `#minor` commit message string tag.
 - **PATCH_STRING_TOKEN** _(optional)_ - Change the default `#patch` commit message string tag.
 - **NONE_STRING_TOKEN** _(optional)_ - Change the default `#none` commit message string tag.
+- - **UPDATE_STRING_TOKEN** _(optional)_ - Change the default `#update 1.0.0 or #update v1.0.0` commit message string tag.
 - **BRANCH_HISTORY** _(optional)_ - Set the history of the branch for finding `#bumps`. Possible values `last`, `full` and `compare` defaults to `compare`.
   - `full`: attempt to show all history, does not work on rebase and squash due missing HEAD [should be deprecated in v2 is breaking many workflows]
   - `last`: show the single last commit
